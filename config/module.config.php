@@ -16,6 +16,29 @@ return array(
         'shared' => array(
         ),
     ),
+    'view_helpers' => array(
+        'factories' => array(
+            'localeNavigation' => 'Detail\Locale\Factory\View\Helper\LocaleNavigationFactory',
+            'locale' => 'Detail\Locale\Factory\View\Helper\LocaleFactory',
+        )
+    ),
+    'slm_locale' => array(
+        /**
+         * Default locale.
+         */
+//        'default' => 'en_US',
+
+        /**
+         * Supported locales.
+         */
+//        'supported' => array('en_US'),
+
+        /**
+         * Detection strategies.
+         */
+//        'strategies' => array(),
+    ),
     'detail_locale' => array(
+        'navigation_items' => array(),
     ),
 );

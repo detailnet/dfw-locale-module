@@ -14,8 +14,8 @@ class ModuleOptionsTest extends OptionsTestCase
         $this->options = $this->getOptions(
             'Detail\Locale\Options\ModuleOptions',
             array(
-                'getAuthorization',
-                'setAuthorization',
+                'getNavigationItems',
+                'setNavigationItems',
             )
         );
     }
@@ -25,14 +25,14 @@ class ModuleOptionsTest extends OptionsTestCase
         $this->assertInstanceOf('Detail\Locale\Options\ModuleOptions', $this->options);
     }
 
-    public function testAuthorizationCanBeSet()
+    public function testNavigationItemsCanBeSet()
     {
-        $this->assertNull($this->options->getAuthorization());
+        $this->assertEquals(array(), $this->options->getNavigationItems());
 
-        $this->options->setAuthorization(array());
+        $navigationItems = array('de_CH' => 'DE');
 
-        $authorization = $this->options->getAuthorization();
+        $this->options->setNavigationItems($navigationItems);
 
-        $this->assertInstanceOf('Detail\Locale\Options\Authorization\AuthorizationOptions', $authorization);
+        $this->assertEquals($navigationItems, $this->options->getNavigationItems());
     }
 }

@@ -6,10 +6,9 @@ use Zend\Loader\AutoloaderFactory;
 use Zend\Loader\StandardAutoloader;
 use Zend\ModuleManager\Feature\AutoloaderProviderInterface;
 use Zend\ModuleManager\Feature\ConfigProviderInterface;
-use Zend\ModuleManager\Feature\ConsoleUsageProviderInterface;
 use Zend\ModuleManager\Feature\ControllerProviderInterface;
 use Zend\ModuleManager\Feature\ServiceProviderInterface;
-//use Zend\Mvc\MvcEvent;
+use Zend\Mvc\MvcEvent;
 
 class Module implements
     AutoloaderProviderInterface,
@@ -17,10 +16,10 @@ class Module implements
     ControllerProviderInterface,
     ServiceProviderInterface
 {
-//    public function onBootstrap(MvcEvent $event)
-//    {
-//        $this->bootstrapNavigation($event);
-//    }
+    public function onBootstrap(MvcEvent $event)
+    {
+        $this->bootstrapLocale($event);
+    }
 
     /**
      * {@inheritdoc}
@@ -54,9 +53,17 @@ class Module implements
         return array();
     }
 
-//    protected function bootstrapNavigation(MvcEvent $event)
-//    {
-//        /** @var \Zend\ServiceManager\ServiceManager $serviceManager */
-//        $serviceManager = $event->getApplication()->getServiceManager();
-//    }
+    /**
+     * @param MvcEvent $event
+     */
+    protected function bootstrapLocale(MvcEvent $event)
+    {
+        /** @var \Zend\ServiceManager\ServiceManager $serviceManager */
+        $serviceManager = $event->getApplication()->getServiceManager();
+
+//        /** @var \SlmLocale\Strategy\StrategyPluginManager $strategies */
+//        $strategies = $serviceManager->get('SlmLocale\Strategy\StrategyPluginManager');
+//
+//        var_dump($strategies->getRegisteredServices());
+    }
 }
