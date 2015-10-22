@@ -7,8 +7,10 @@ return array(
         'aliases' => array(
         ),
         'invokables' => array(
+            'SlmLocale\Strategy\StrategyPluginManager' => 'SlmLocale\Strategy\StrategyPluginManager',
         ),
         'factories' => array(
+            'SlmLocale\Locale\Detector' => 'SlmLocale\Service\DetectorFactory',
             'Detail\Locale\Options\ModuleOptions' => 'Detail\Locale\Factory\Options\ModuleOptionsFactory',
         ),
         'initializers' => array(
@@ -17,10 +19,19 @@ return array(
         ),
     ),
     'view_helpers' => array(
+        'aliases' => array(
+//            'localeMenu' => 'SlmLocale\View\Helper\LocaleMenu',
+            'localeUrl' => 'SlmLocale\View\Helper\LocaleUrl',
+            'locale' => 'Detail\Locale\View\Helper\Locale',
+            'localeNavigation' => 'Detail\Locale\View\Helper\LocaleNavigation',
+
+        ),
         'factories' => array(
-            'localeNavigation' => 'Detail\Locale\Factory\View\Helper\LocaleNavigationFactory',
-            'locale' => 'Detail\Locale\Factory\View\Helper\LocaleFactory',
-        )
+//            'SlmLocale\View\Helper\LocaleMenu' => 'SlmLocale\Service\LocaleMenuViewHelperFactory',
+            'SlmLocale\View\Helper\LocaleUrl'=> 'SlmLocale\Service\LocaleUrlViewHelperFactory',
+            'Detail\Locale\View\Helper\Locale' => 'Detail\Locale\Factory\View\Helper\LocaleFactory',
+            'Detail\Locale\View\Helper\LocaleNavigation' => 'Detail\Locale\Factory\View\Helper\LocaleNavigationFactory',
+        ),
     ),
     'slm_locale' => array(
         /**
@@ -36,9 +47,10 @@ return array(
         /**
          * Detection strategies.
          */
-//        'strategies' => array(),
+        'strategies' => array(),
     ),
     'detail_locale' => array(
         'navigation_items' => array(),
+        'listeners' => array(),
     ),
 );

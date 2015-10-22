@@ -12,6 +12,11 @@ class ModuleOptions extends AbstractOptions
     protected $navigationItems = array();
 
     /**
+     * @var array
+     */
+    protected $listeners = array();
+
+    /**
      * @return array
      */
     public function getNavigationItems()
@@ -25,5 +30,21 @@ class ModuleOptions extends AbstractOptions
     public function setNavigationItems(array $navigationItems)
     {
         $this->navigationItems = $navigationItems;
+    }
+
+    /**
+     * @return array
+     */
+    public function getListeners()
+    {
+        return $this->listeners;
+    }
+
+    /**
+     * @param array $listeners
+     */
+    public function setListeners(array $listeners)
+    {
+        $this->listeners = $listeners;
     }
 }

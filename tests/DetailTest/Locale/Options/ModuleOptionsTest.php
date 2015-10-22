@@ -16,6 +16,8 @@ class ModuleOptionsTest extends OptionsTestCase
             array(
                 'getNavigationItems',
                 'setNavigationItems',
+                'getListeners',
+                'setListeners',
             )
         );
     }
@@ -34,5 +36,16 @@ class ModuleOptionsTest extends OptionsTestCase
         $this->options->setNavigationItems($navigationItems);
 
         $this->assertEquals($navigationItems, $this->options->getNavigationItems());
+    }
+
+    public function testListenersCanBeSet()
+    {
+        $this->assertEquals(array(), $this->options->getListeners());
+
+        $listeners = array('Some\Listener\Class');
+
+        $this->options->setListeners($listeners);
+
+        $this->assertEquals($listeners, $this->options->getListeners());
     }
 }
