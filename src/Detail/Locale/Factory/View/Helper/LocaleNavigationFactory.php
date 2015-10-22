@@ -10,8 +10,8 @@ use Zend\ServiceManager\FactoryInterface;
 use Detail\Locale\Options\ModuleOptions;
 use Detail\Locale\View\Helper\LocaleNavigation as Helper;
 
-class LocaleNavigationFactory
-    implements FactoryInterface
+class LocaleNavigationFactory implements
+    FactoryInterface
 {
     /**
      * @param ServiceLocatorInterface $pluginManager

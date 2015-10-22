@@ -8,8 +8,8 @@ use Zend\ServiceManager\FactoryInterface;
 
 use Detail\Locale\View\Helper\Locale as Helper;
 
-class LocaleFactory
-    implements FactoryInterface
+class LocaleFactory implements
+    FactoryInterface
 {
     /**
      * @param ServiceLocatorInterface $pluginManager
