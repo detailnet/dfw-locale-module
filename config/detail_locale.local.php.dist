@@ -2,5 +2,9 @@
 
 return array(
     'detail_locale' => array(
+        'navigation_items' => array(
+            'de_CH' => 'DE',
+            'en_US' => 'EN',
+        ),
     ),
 );
