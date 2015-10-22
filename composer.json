@@ -1,0 +1,66 @@
+{
+    "name": "detailnet/dfw-locale-module",
+    "description": "Zend Framework 2 Module for localization",
+    "type": "library",
+    "keywords": [
+        "dfw",
+        "detailnet",
+        "locale",
+        "localization",
+        "module",
+        "zf2"
+    ],
+    "homepage": "https://github.com/detailnet/dfw-locale-module/",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Ivan Wolf",
+            "email": "ivan.wolf@detailnet.ch"
+        }
+    ],
+    "require": {
+        "php": ">=5.5.0",
+        "zendframework/zend-loader": "2.*",
+        "zendframework/zend-modulemanager": "2.*",
+        "zendframework/zend-mvc": "2.*",
+        "zendframework/zend-servicemanager": "2.*",
+        "zendframework/zend-stdlib": "2.*",
+        "detailnet/dfw-core": "~0.2"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "~4.4.5",
+        "squizlabs/php_codesniffer" : "~2.2.0",
+        "phpmd/phpmd": "~2.1.3",
+        "satooshi/php-coveralls": "dev-master",
+        "slm/locale": "~0.1.0"
+    },
+    "suggest": {
+        "slm/locale": "For..."
+    },
+    "autoload": {
+        "psr-0": {
+            "Detail\\Locale\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-0": {
+            "DetailTest\\Locale\\": "tests/"
+        }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.x-dev"
+        }
+    },
+    "archive": {
+        "exclude": [
+            "!vendor",
+            "tests",
+            "*phpunit.xml",
+            ".travis.yml",
+            "build.xml",
+            "build.properties",
+            "composer.phar"
+        ]
+    }
+}
