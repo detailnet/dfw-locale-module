@@ -5,6 +5,7 @@ namespace Detail\Locale\Strategy;
 use Zend\Http\Request as HttpRequest;
 //use Zend\Mvc\Router\Http\RouteMatch;
 //use Zend\Mvc\Router\Http\TreeRouteStack;
+use Zend\Stdlib\ResponseInterface;
 
 use SlmLocale\LocaleEvent;
 use SlmLocale\Strategy\UriPathStrategy as BaseUriPathStrategy;
@@ -94,7 +95,7 @@ class UriPathStrategy extends BaseUriPathStrategy implements
 
     /**
      * @param LocaleEvent $event
-     * @return string|void
+     * @return ResponseInterface|void
      */
     public function found(LocaleEvent $event)
     {
