@@ -128,11 +128,12 @@ class Module implements
         /** @var \Zend\ServiceManager\ServiceManager $services */
         $services = $event->getApplication()->getServiceManager();
 
-        // Use our own extended version of UriPathStrategy
+        // Use our own extended versions of UriPathStrategy and CookieStrategy
         if ($services->has('SlmLocale\Strategy\StrategyPluginManager')) {
             /** @var \SlmLocale\Strategy\StrategyPluginManager $plugins */
             $plugins = $services->get('SlmLocale\Strategy\StrategyPluginManager');
             $plugins->setInvokableClass('uripath', Strategy\UriPathStrategy::CLASS);
+            $plugins->setInvokableClass('cookie', Strategy\CookieStrategy::CLASS);
 
             // We may need to inject the MvcEvent into a Strategy
             $plugins->addInitializer(
