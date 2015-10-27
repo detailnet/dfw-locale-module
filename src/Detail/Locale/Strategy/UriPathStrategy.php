@@ -4,7 +4,7 @@ namespace Detail\Locale\Strategy;
 
 use Zend\Http\Request as HttpRequest;
 //use Zend\Mvc\Router\Http\RouteMatch;
-//use Zend\Mvc\Router\Http\TreeRouteStack;
+use Zend\Mvc\Router\Http\TreeRouteStack;
 use Zend\Stdlib\ResponseInterface;
 
 use SlmLocale\LocaleEvent;
@@ -32,7 +32,7 @@ class UriPathStrategy extends BaseUriPathStrategy implements
     /**
      * Enabled request methods.
      *
-     * Be careful when enabling methods other than GET.
+     * Be careful when enabling redirection for methods other than GET.
      * The request may be redirected to GET.
      *
      * @var array
@@ -137,7 +137,9 @@ class UriPathStrategy extends BaseUriPathStrategy implements
      */
     public function detect(LocaleEvent $event)
     {
-        if (!$this->isEnabled($event)) {
+        // Check if the route should be ignored...
+        // Note that this check works only when the locale is not already in the URI path.
+        if ($this->isIgnoredRoute()) {
             return null;
         }
 
@@ -150,7 +152,37 @@ class UriPathStrategy extends BaseUriPathStrategy implements
      */
     public function found(LocaleEvent $event)
     {
-        if (!$this->isEnabled($event)) {
+        $request = $event->getRequest();
+
+        if (!$this->isHttpRequest($request)) {
+            return null;
+        }
+
+        /** @var HttpRequest $request */
+
+        $locale = $this->getLocaleOrAlias($event);
+
+        // Check if the route should be ignored...
+        // Note that this check works only when the locale is not already in the URI path.
+        if ($this->isIgnoredRoute()) {
+            return null;
+        }
+
+        // Check if redirection is enabled for current request's method...
+        if (!$this->isHttpRequestMethodEnabled($request)) {
+            // Since it's a HTTP request, we need to set the base URL accordingly (with locale, i.e. /de),
+            // when the locale is already in the URI.
+            // Otherwise the route is not matched and we get a 404.
+
+            $base = $this->getBasePath();
+            $found = $this->getFirstSegmentInPath($request->getUri(), $base);
+
+            if ($locale === $found) {
+                /** @var TreeRouteStack $router */
+                $router = $this->getRouter();
+                $router->setBaseUrl($base . '/' . $locale);
+            }
+
             return null;
         }
 
@@ -159,24 +191,25 @@ class UriPathStrategy extends BaseUriPathStrategy implements
 
     /**
      * @param LocaleEvent $event
-     * @return boolean
+     * @return string|null
      */
-    protected function isEnabled(LocaleEvent $event)
+    protected function getLocaleOrAlias(LocaleEvent $event)
     {
-        // Check if the route should be ignored...
-        if ($this->isIgnoredRoute()) {
-            return false;
+        $locale = $event->getLocale();
+
+        if ($locale === null) {
+            return null;
         }
 
-        $request = $event->getRequest();
+        if (!$this->redirectToCanonical() && $this->getAliases() !== null) {
+            $alias = $this->getAliasForLocale($locale);
 
-        if (!$this->isHttpRequest($request)
-            || !$this->isHttpRequestMethodEnabled($request)
-        ) {
-            return false;
+            if ($alias !== null) {
+                $locale = $alias;
+            }
         }
 
-        return true;
+        return $locale;
     }
 
     /**
