@@ -6,7 +6,7 @@
 [![Latest Unstable Version](https://poser.pugx.org/detailnet/dfw-locale-module/v/unstable.svg)](https://packagist.org/packages/detailnet/dfw-locale-module)
 
 ## Introduction
-This module contains tools to use the denner-client (Uses [denner-client](https://github.com/detailnet/denner-client)).
+This module contains tools to use the [denner-client](https://github.com/detailnet/denner-client).
 
 ## Requirements
 [Zend Framework 2 Skeleton Application](http://www.github.com/zendframework/ZendSkeletonApplication) (or compatible architecture)
