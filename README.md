@@ -6,7 +6,7 @@
 [![Latest Unstable Version](https://poser.pugx.org/detailnet/dfw-locale-module/v/unstable.svg)](https://packagist.org/packages/detailnet/dfw-locale-module)
 
 ## Introduction
-This module contains tools localized applications (based on the [SlmLocale module for ZF2](https://github.com/juriansluiman/SlmLocale)).
+This module contains tools to use the denner-client (Uses [denner-client](https://github.com/detailnet/denner-client)).
 
 ## Requirements
 [Zend Framework 2 Skeleton Application](http://www.github.com/zendframework/ZendSkeletonApplication) (or compatible architecture)
@@ -21,7 +21,7 @@ Install the module through [Composer](http://getcomposer.org/) using the followi
      ```json
      {
          "require": {
-             "detailnet/dfw-locale-module": "1.x-dev"
+             "detailnet/denner-client-module": "1.x-dev"
          }
      }
      ```
@@ -35,11 +35,11 @@ Install the module through [Composer](http://getcomposer.org/) using the followi
   6. Open `configs/application.config.php` and add following key to your `modules`:
 
      ```php
-     'Detail\Locale',
+     'Denner\Client',
      ```
 
-  7. Copy `vendor/detailnet/dfw-locale-module/config/detail_locale.local.php.dist` into your application's
-     `config/autoload` directory, rename it to `detail_locale.local.php` and make the appropriate changes.
+  7. Copy `vendor/detailnet/dfw-locale-module/config/denner_client.local.php.dist` into your application's
+     `config/autoload` directory, rename it to `denner_client.local.php` and make the appropriate changes.
 
 ## Usage
 tbd
