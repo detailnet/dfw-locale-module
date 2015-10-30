@@ -1,4 +1,4 @@
-# Zend Framework 2 Module for localization
+# Zend Framework 2 Module for denner-client
 
 [![Build Status](https://travis-ci.org/detailnet/dfw-locale-module.svg?branch=master)](https://travis-ci.org/detailnet/dfw-locale-module)
 [![Coverage Status](https://img.shields.io/coveralls/detailnet/dfw-locale-module.svg)](https://coveralls.io/r/detailnet/dfw-locale-module)
