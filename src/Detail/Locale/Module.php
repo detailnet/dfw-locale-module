@@ -25,6 +25,9 @@ class Module implements
     ControllerProviderInterface,
     ServiceProviderInterface
 {
+    /**
+     * @param MvcEvent $event
+     */
     public function onBootstrap(MvcEvent $event)
     {
         $this->bootstrapStrategies($event);
@@ -54,11 +57,17 @@ class Module implements
         return include __DIR__ . '/../../../config/module.config.php';
     }
 
+    /**
+     * @return array
+     */
     public function getControllerConfig()
     {
         return array();
     }
 
+    /**
+     * @return array
+     */
     public function getServiceConfig()
     {
         return array();
@@ -74,9 +83,9 @@ class Module implements
         /** @var ModuleOptions $moduleOptions */
         $moduleOptions = $services->get(ModuleOptions::CLASS);
 
-        if ($services->has('SlmLocale\Locale\Detector')) {
-            /** @var \SlmLocale\Locale\Detector $detector */
-            $detector = $services->get('SlmLocale\Locale\Detector');
+        if ($services->has(SlmLocale\Locale\Detector::CLASS)) {
+            /** @var SlmLocale\Locale\Detector $detector */
+            $detector = $services->get(SlmLocale\Locale\Detector::CLASS);
 
             foreach ($moduleOptions->getListeners() as $listenerClass) {
                 if (!$services->has($listenerClass)) {
@@ -129,9 +138,9 @@ class Module implements
         $services = $event->getApplication()->getServiceManager();
 
         // Use our own extended version of UriPathStrategy
-        if ($services->has('SlmLocale\Strategy\StrategyPluginManager')) {
-            /** @var \SlmLocale\Strategy\StrategyPluginManager $plugins */
-            $plugins = $services->get('SlmLocale\Strategy\StrategyPluginManager');
+        if ($services->has(SlmLocale\Strategy\StrategyPluginManager::CLASS)) {
+            /** @var SlmLocale\Strategy\StrategyPluginManager $plugins */
+            $plugins = $services->get(SlmLocale\Strategy\StrategyPluginManager::CLASS);
             $plugins->setInvokableClass('uripath', Strategy\UriPathStrategy::CLASS);
 
             // We may need to inject the MvcEvent into a Strategy

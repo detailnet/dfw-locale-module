@@ -6,7 +6,6 @@ use Zend\Http\Request as HttpRequest;
 //use Zend\Mvc\Router\Http\RouteMatch;
 //use Zend\Mvc\Router\Http\TreeRouteStack;
 
-
 use SlmLocale\LocaleEvent;
 use SlmLocale\Strategy\UriPathStrategy as BaseUriPathStrategy;
 
@@ -106,7 +105,6 @@ class UriPathStrategy extends BaseUriPathStrategy implements
 
         return parent::found($event);
     }
-
 
     /**
      * @return string
