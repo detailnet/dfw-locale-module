@@ -2,23 +2,11 @@
 
 namespace Detail\Locale\Factory\SlmLocale;
 
+use Zend\Mvc\Service\AbstractPluginManagerFactory;
+
 use SlmLocale\Strategy\StrategyPluginManager;
 
-use Zend\ServiceManager\FactoryInterface;
-use Zend\ServiceManager\ServiceLocatorInterface;
-
-class StrategyPluginManagerFactory implements
-    FactoryInterface
+class StrategyPluginManagerFactory extends AbstractPluginManagerFactory
 {
-    /**
-     * @param ServiceLocatorInterface $serviceLocator
-     * @return StrategyPluginManager
-     */
-    public function createService(ServiceLocatorInterface $serviceLocator)
-    {
-        $strategies = new StrategyPluginManager();
-        $strategies->setServiceLocator($serviceLocator);
-
-        return $strategies;
-    }
+    const PLUGIN_MANAGER_CLASS = StrategyPluginManager::CLASS;
 }

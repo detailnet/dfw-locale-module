@@ -25,6 +25,9 @@ class Module implements
     ControllerProviderInterface,
     ServiceProviderInterface
 {
+    /**
+     * @param MvcEvent $event
+     */
     public function onBootstrap(MvcEvent $event)
     {
         $this->bootstrapStrategies($event);
@@ -54,11 +57,17 @@ class Module implements
         return include __DIR__ . '/../../../config/module.config.php';
     }
 
+    /**
+     * @return array
+     */
     public function getControllerConfig()
     {
         return array();
     }
 
+    /**
+     * @return array
+     */
     public function getServiceConfig()
     {
         return array();
@@ -74,9 +83,9 @@ class Module implements
         /** @var ModuleOptions $moduleOptions */
         $moduleOptions = $services->get(ModuleOptions::CLASS);
 
-        if ($services->has('SlmLocale\Locale\Detector')) {
-            /** @var \SlmLocale\Locale\Detector $detector */
-            $detector = $services->get('SlmLocale\Locale\Detector');
+        if ($services->has(SlmLocale\Locale\Detector::CLASS)) {
+            /** @var SlmLocale\Locale\Detector $detector */
+            $detector = $services->get(SlmLocale\Locale\Detector::CLASS);
 
             foreach ($moduleOptions->getListeners() as $listenerClass) {
                 if (!$services->has($listenerClass)) {
@@ -131,7 +140,7 @@ class Module implements
         // Use our own extended versions of UriPathStrategy and CookieStrategy
         if ($services->has('SlmLocale\Strategy\StrategyPluginManager')) {
             /** @var \SlmLocale\Strategy\StrategyPluginManager $plugins */
-            $plugins = $services->get('SlmLocale\Strategy\StrategyPluginManager');
+            $plugins = $services->get(SlmLocale\Strategy\StrategyPluginManager::CLASS);
             $plugins->setInvokableClass('uripath', Strategy\UriPathStrategy::CLASS);
             $plugins->setInvokableClass('cookie', Strategy\CookieStrategy::CLASS);
 
