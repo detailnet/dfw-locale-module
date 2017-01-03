@@ -7,10 +7,10 @@ return array(
         'aliases' => array(
         ),
         'invokables' => array(
-            'SlmLocale\Strategy\StrategyPluginManager' => 'SlmLocale\Strategy\StrategyPluginManager',
         ),
         'factories' => array(
             'SlmLocale\Locale\Detector' => 'SlmLocale\Service\DetectorFactory',
+            'SlmLocale\Strategy\StrategyPluginManager' => 'Detail\Locale\Factory\SlmLocale\StrategyPluginManagerFactory',
             'Detail\Locale\Options\ModuleOptions' => 'Detail\Locale\Factory\Options\ModuleOptionsFactory',
         ),
         'initializers' => array(
