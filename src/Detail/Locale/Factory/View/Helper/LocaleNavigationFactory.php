@@ -38,6 +38,7 @@ class LocaleNavigationFactory implements
 
         if ($route) {
             $helper->setRoute($route->getMatchedRouteName());
+            $helper->setRouteParams($route->getParams());
         }
 
         return $helper;
