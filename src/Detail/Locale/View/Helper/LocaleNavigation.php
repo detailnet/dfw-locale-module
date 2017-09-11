@@ -14,7 +14,6 @@ class LocaleNavigation extends AbstractHelper
      */
     protected $navigationItems = array();
 
-
     /**
      * @var null|string
      */
