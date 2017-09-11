@@ -36,7 +36,6 @@ class LocaleNavigationFactory implements
         $helper->setNavigationItems($moduleOptions->getNavigationItems());
         $helper->setTranslator($translator);
 
-
         if ($route) {
             $helper->setRoute($route->getMatchedRouteName());
             $helper->setParams($route->getParams());
