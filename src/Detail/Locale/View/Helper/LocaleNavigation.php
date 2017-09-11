@@ -21,6 +21,11 @@ class LocaleNavigation extends AbstractHelper
     protected $route;
 
     /**
+     * @var array
+     */
+    protected $params = array();
+
+    /**
      * @return string
      */
     public function __invoke()
@@ -30,7 +35,7 @@ class LocaleNavigation extends AbstractHelper
         $currentLocale = $this->getView()->locale();
 
         foreach ($this->getNavigationItems() as $key => $label) {
-            $url = $this->getView()->localeUrl($key, $this->getRoute() ? $this->getRoute() : 'home');
+            $url = $this->getView()->localeUrl($key, $this->getRoute() ? $this->getRoute() : 'home', $this->getParams());
             $label = $this->getView()->translate($label);
 
             $output[] = '<a' . ($currentLocale === $key ? ' class="active"' : '') . ' href="' . $url . '">' . $label . '</a>';
@@ -57,6 +62,22 @@ class LocaleNavigation extends AbstractHelper
     public function getRoute()
     {
         return $this->route;
+    }
+
+    /**
+     * @return array
+     */
+    public function getParams()
+    {
+        return $this->params;
+    }
+
+    /**
+     * @param array $params
+     */
+    public function setParams(array $params)
+    {
+        $this->params = $params;
     }
 
     /**
