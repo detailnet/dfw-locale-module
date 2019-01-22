@@ -2,17 +2,19 @@
 
 namespace DetailTest\Locale\Options;
 
+use Detail\Locale\Options\ModuleOptions;
+
 class ModuleOptionsTest extends OptionsTestCase
 {
     /**
-     * @var \Detail\Locale\Options\ModuleOptions
+     * @var ModuleOptions
      */
     protected $options;
 
     protected function setUp()
     {
         $this->options = $this->getOptions(
-            'Detail\Locale\Options\ModuleOptions',
+            ModuleOptions::CLASS,
             [
                 'getNavigationItems',
                 'setNavigationItems',
@@ -24,7 +26,7 @@ class ModuleOptionsTest extends OptionsTestCase
 
     public function testOptionsExist()
     {
-        $this->assertInstanceOf('Detail\Locale\Options\ModuleOptions', $this->options);
+        $this->assertInstanceOf(ModuleOptions::CLASS, $this->options);
     }
 
     public function testNavigationItemsCanBeSet()

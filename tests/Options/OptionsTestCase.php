@@ -2,20 +2,24 @@
 
 namespace DetailTest\Locale\Options;
 
-use PHPUnit_Framework_TestCase as TestCase;
+use ReflectionClass;
+use ReflectionMethod;
+
+use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\TestCase;
 
 abstract class OptionsTestCase extends TestCase
 {
     /**
      * @param string $class
      * @param array $methods
-     * @return \PHPUnit_Framework_MockObject_MockObject
+     * @return MockObject
      */
     protected function getOptions($class, array $methods)
     {
         $mockedMethods = array_diff($this->getMethods($class), $methods);
 
-        return $this->getMock($class, $mockedMethods);
+        return $this->getMockBuilder($class)->setMethods($mockedMethods)->getMock();
     }
 
     /**
@@ -32,9 +36,9 @@ abstract class OptionsTestCase extends TestCase
         $methods = [];
 
         if (class_exists($class, $autoload) || interface_exists($class, $autoload)) {
-            $reflector = new \ReflectionClass($class);
+            $reflector = new ReflectionClass($class);
 
-            foreach ($reflector->getMethods(\ReflectionMethod::IS_PUBLIC | \ReflectionMethod::IS_ABSTRACT) as $method) {
+            foreach ($reflector->getMethods(ReflectionMethod::IS_PUBLIC | ReflectionMethod::IS_ABSTRACT) as $method) {
                 $methods[] = $method->getName();
             }
         }
