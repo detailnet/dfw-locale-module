@@ -13,12 +13,12 @@ class ModuleOptionsTest extends OptionsTestCase
     {
         $this->options = $this->getOptions(
             'Detail\Locale\Options\ModuleOptions',
-            array(
+            [
                 'getNavigationItems',
                 'setNavigationItems',
                 'getListeners',
                 'setListeners',
-            )
+            ]
         );
     }
 
@@ -29,9 +29,9 @@ class ModuleOptionsTest extends OptionsTestCase
 
     public function testNavigationItemsCanBeSet()
     {
-        $this->assertEquals(array(), $this->options->getNavigationItems());
+        $this->assertEquals([], $this->options->getNavigationItems());
 
-        $navigationItems = array('de_CH' => 'DE');
+        $navigationItems = ['de_CH' => 'DE'];
 
         $this->options->setNavigationItems($navigationItems);
 
@@ -40,9 +40,9 @@ class ModuleOptionsTest extends OptionsTestCase
 
     public function testListenersCanBeSet()
     {
-        $this->assertEquals(array(), $this->options->getListeners());
+        $this->assertEquals([], $this->options->getListeners());
 
-        $listeners = array('Some\Listener\Class');
+        $listeners = ['Some\Listener\Class'];
 
         $this->options->setListeners($listeners);
 

@@ -27,7 +27,7 @@ class UriPathStrategy extends BaseUriPathStrategy implements
     /**
      * @var array
      */
-    protected $ignoredRoutes = array();
+    protected $ignoredRoutes = [];
 
     /**
      * Enabled request methods.
@@ -37,7 +37,7 @@ class UriPathStrategy extends BaseUriPathStrategy implements
      *
      * @var array
      */
-    protected $methods = array('GET');
+    protected $methods = ['GET'];
 
     /**
      * @return array
@@ -68,7 +68,7 @@ class UriPathStrategy extends BaseUriPathStrategy implements
      */
     public function setMethods(array $methods)
     {
-        $uppercaseMethods = array();
+        $uppercaseMethods = [];
 
         foreach ($methods as $method) {
             $uppercaseMethods[] = strtoupper($method);
@@ -118,7 +118,7 @@ class UriPathStrategy extends BaseUriPathStrategy implements
     /**
      * @param array $options
      */
-    public function setOptions(array $options = array())
+    public function setOptions(array $options = [])
     {
         parent::setOptions($options);
 

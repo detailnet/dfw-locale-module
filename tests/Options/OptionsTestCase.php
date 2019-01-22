@@ -29,7 +29,7 @@ abstract class OptionsTestCase extends TestCase
      */
     protected function getMethods($class, $autoload = true)
     {
-        $methods = array();
+        $methods = [];
 
         if (class_exists($class, $autoload) || interface_exists($class, $autoload)) {
             $reflector = new \ReflectionClass($class);

@@ -9,12 +9,12 @@ class ModuleOptions extends AbstractOptions
     /**
      * @var array
      */
-    protected $navigationItems = array();
+    protected $navigationItems = [];
 
     /**
      * @var array
      */
-    protected $listeners = array();
+    protected $listeners = [];
 
     /**
      * @return array

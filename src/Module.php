@@ -39,13 +39,13 @@ class Module implements
      */
     public function getAutoloaderConfig()
     {
-        return array(
-            AutoloaderFactory::STANDARD_AUTOLOADER => array(
-                StandardAutoloader::LOAD_NS => array(
+        return [
+            AutoloaderFactory::STANDARD_AUTOLOADER => [
+                StandardAutoloader::LOAD_NS => [
                     __NAMESPACE__ => __DIR__,
-                ),
-            ),
-        );
+                ],
+            ],
+        ];
     }
 
     /**
@@ -62,7 +62,7 @@ class Module implements
      */
     public function getControllerConfig()
     {
-        return array();
+        return [];
     }
 
     /**
@@ -70,7 +70,7 @@ class Module implements
      */
     public function getServiceConfig()
     {
-        return array();
+        return [];
     }
 
     /**

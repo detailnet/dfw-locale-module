@@ -12,7 +12,7 @@ class LocaleNavigation extends AbstractHelper
     /**
      * @var array
      */
-    protected $navigationItems = array();
+    protected $navigationItems = [];
 
     /**
      * @var null|string
@@ -22,14 +22,14 @@ class LocaleNavigation extends AbstractHelper
     /**
      * @var array
      */
-    protected $routeParams = array();
+    protected $routeParams = [];
 
     /**
      * @return string
      */
     public function __invoke()
     {
-        $output = array();
+        $output = [];
 
         $currentLocale = $this->getView()->locale();
 
