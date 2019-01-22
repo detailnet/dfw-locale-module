@@ -2,10 +2,12 @@
 
 namespace Detail\Locale\Factory\View\Helper;
 
-use Zend\Mvc\Router\Http\RouteMatch;
+use Interop\Container\ContainerInterface;
+
 use Zend\I18n\Translator\Translator;
-use Zend\ServiceManager\ServiceLocatorInterface;
-use Zend\ServiceManager\FactoryInterface;
+use Zend\Mvc\MvcEvent;
+use Zend\Router\RouteMatch;
+use Zend\ServiceManager\Factory\FactoryInterface;
 
 use Detail\Locale\Options\ModuleOptions;
 use Detail\Locale\View\Helper\LocaleNavigation as Helper;
@@ -14,31 +16,30 @@ class LocaleNavigationFactory implements
     FactoryInterface
 {
     /**
-     * @param ServiceLocatorInterface $pluginManager
+     * @param ContainerInterface $container
+     * @param string $requestedName
+     * @param array|null $options
      * @return Helper
      */
-    public function createService(ServiceLocatorInterface $pluginManager)
+    public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {
-        /** @var \Zend\View\HelperPluginManager $pluginManager */
-
-        $services = $pluginManager->getServiceLocator();
-
         /** @var ModuleOptions $moduleOptions */
-        $moduleOptions = $services->get(ModuleOptions::CLASS);
+        $moduleOptions = $container->get(ModuleOptions::CLASS);
 
         /** @var Translator $translator */
-        $translator = $services->get('translator');
+        $translator = $container->get('translator');
 
-        /** @var RouteMatch $route */
-        $route = $services->get('Application')->getMvcEvent()->getRouteMatch();
+        /** @var MvcEvent $mvcEvent */
+        $mvcEvent = $container->get('Application')->getMvcEvent();
+        $routeMatch = $mvcEvent->getRouteMatch();
 
         $helper = new Helper();
         $helper->setNavigationItems($moduleOptions->getNavigationItems());
         $helper->setTranslator($translator);
 
-        if ($route) {
-            $helper->setRoute($route->getMatchedRouteName());
-            $helper->setRouteParams($route->getParams());
+        if ($routeMatch instanceof RouteMatch) {
+            $helper->setRoute($routeMatch->getMatchedRouteName());
+            $helper->setRouteParams($routeMatch->getParams());
         }
 
         return $helper;
