@@ -3,8 +3,8 @@
 namespace Detail\Locale\Strategy;
 
 use Zend\Http\Request as HttpRequest;
-//use Zend\Mvc\Router\Http\RouteMatch;
-use Zend\Mvc\Router\Http\TreeRouteStack;
+//use Zend\Router\Http\RouteMatch;
+use Zend\Router\Http\TreeRouteStack;
 use Zend\Stdlib\ResponseInterface;
 
 use SlmLocale\LocaleEvent;
@@ -179,7 +179,7 @@ class UriPathStrategy extends BaseUriPathStrategy implements
 
             if ($locale === $found) {
                 /** @var TreeRouteStack $router */
-                $router = $this->getRouter();
+                $router = $this->router;
                 $router->setBaseUrl($base . '/' . $locale);
             }
 
