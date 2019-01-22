@@ -35,7 +35,6 @@
         "roave/security-advisories": "dev-master",
         "slm/locale": "^0.3",
         "zendframework/zend-view": "^2.9.0",
-        "zendframework/zend-mvc-i18n": "^1.1",
         "zendframework/zend-i18n": "^2.9"
     },
     "suggest": {
@@ -44,12 +43,12 @@
         "zendframework/zend-i18n": "For usage of the View helpers"
     },
     "autoload": {
-        "psr-0": {
+        "psr-4": {
             "Detail\\Locale\\": "src/"
         }
     },
     "autoload-dev": {
-        "psr-0": {
+        "psr-4": {
             "DetailTest\\Locale\\": "tests/"
         }
     },
