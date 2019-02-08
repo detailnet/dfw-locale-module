@@ -7,6 +7,7 @@ namespace Detail\Locale;
 use SlmLocale;
 
 use Zend\EventManager\ListenerAggregateInterface;
+use Zend\Http\Request as HttpRequest;
 use Zend\ModuleManager\Feature\ConfigProviderInterface;
 use Zend\Mvc\MvcEvent;
 use Zend\Router\SimpleRouteStack;
@@ -38,6 +39,14 @@ class Module implements
      */
     protected function bootstrapSlmLocale(MvcEvent $event)
     {
+        $request = $event->getRequest();
+
+        // Attach only on HTTP GET requests
+        if (!$request instanceof HttpRequest
+            || $request->getMethod() !== 'GET') {
+            return;
+        }
+
         /** @var ServiceManager $serviceManager */
         $serviceManager = $event->getApplication()->getServiceManager();
 
