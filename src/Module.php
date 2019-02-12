@@ -39,14 +39,6 @@ class Module implements
      */
     protected function bootstrapSlmLocale(MvcEvent $event)
     {
-        $request = $event->getRequest();
-
-        // Attach only on HTTP GET requests
-        if (!$request instanceof HttpRequest
-            || $request->getMethod() !== 'GET') {
-            return;
-        }
-
         /** @var ServiceManager $serviceManager */
         $serviceManager = $event->getApplication()->getServiceManager();
 
@@ -124,8 +116,13 @@ class Module implements
 
             /** @var SlmLocale\Strategy\StrategyPluginManager $plugins */
             $plugins = $serviceManager->get(SlmLocale\Strategy\StrategyPluginManager::CLASS);
+
+            // Our cookie strategy
             $plugins->setInvokableClass('cookie', Strategy\CookieStrategy::CLASS);
-            $plugins->setFactory('uripath', function () use ($router) {
+
+            // Our uripath strategy
+            $plugins->setAlias('uripath', Strategy\UriPathStrategy::CLASS);
+            $plugins->setFactory(Strategy\UriPathStrategy::CLASS, function () use ($router) {
                 return new Strategy\UriPathStrategy($router);
             });
 
