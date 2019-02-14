@@ -6,24 +6,19 @@ namespace Detail\Locale;
 
 use SlmLocale;
 
-use Zend\Loader\AutoloaderFactory;
-use Zend\Loader\StandardAutoloader;
-use Zend\ModuleManager\Feature\AutoloaderProviderInterface;
+use Zend\EventManager\ListenerAggregateInterface;
+use Zend\Http\Request as HttpRequest;
 use Zend\ModuleManager\Feature\ConfigProviderInterface;
-use Zend\ModuleManager\Feature\ControllerProviderInterface;
-use Zend\ModuleManager\Feature\ServiceProviderInterface;
 use Zend\Mvc\MvcEvent;
-//use Zend\Stdlib\ResponseInterface;
+use Zend\Router\SimpleRouteStack;
+use Zend\ServiceManager\ServiceManager;
 
 use Detail\Locale\Mvc\MvcEventAwareInterface;
 use Detail\Locale\Options\ModuleOptions;
 use Detail\Locale\Strategy;
 
 class Module implements
-    AutoloaderProviderInterface,
-    ConfigProviderInterface,
-    ControllerProviderInterface,
-    ServiceProviderInterface
+    ConfigProviderInterface
 {
     /**
      * @param MvcEvent $event
@@ -34,43 +29,9 @@ class Module implements
         $this->bootstrapSlmLocale($event);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getAutoloaderConfig()
-    {
-        return array(
-            AutoloaderFactory::STANDARD_AUTOLOADER => array(
-                StandardAutoloader::LOAD_NS => array(
-                    __NAMESPACE__ => __DIR__,
-                ),
-            ),
-        );
-    }
-
-    /**
-     * {@inheritdoc}
-     */
     public function getConfig()
     {
-        /** @todo We should merge with SlmLocale's config */
-        return include __DIR__ . '/../../../config/module.config.php';
-    }
-
-    /**
-     * @return array
-     */
-    public function getControllerConfig()
-    {
-        return array();
-    }
-
-    /**
-     * @return array
-     */
-    public function getServiceConfig()
-    {
-        return array();
+        return include __DIR__ . '/../config/module.config.php';
     }
 
     /**
@@ -78,17 +39,18 @@ class Module implements
      */
     protected function bootstrapSlmLocale(MvcEvent $event)
     {
-        $services = $event->getApplication()->getServiceManager();
+        /** @var ServiceManager $serviceManager */
+        $serviceManager = $event->getApplication()->getServiceManager();
 
         /** @var ModuleOptions $moduleOptions */
-        $moduleOptions = $services->get(ModuleOptions::CLASS);
+        $moduleOptions = $serviceManager->get(ModuleOptions::CLASS);
 
-        if ($services->has(SlmLocale\Locale\Detector::CLASS)) {
+        if ($serviceManager->has(SlmLocale\Locale\Detector::CLASS)) {
             /** @var SlmLocale\Locale\Detector $detector */
-            $detector = $services->get(SlmLocale\Locale\Detector::CLASS);
+            $detector = $serviceManager->get(SlmLocale\Locale\Detector::CLASS);
 
             foreach ($moduleOptions->getListeners() as $listenerClass) {
-                if (!$services->has($listenerClass)) {
+                if (!$serviceManager->has($listenerClass)) {
                     throw new Exception\ConfigException(
                         sprintf(
                             'Invalid listener class "%s" specified; must be a valid class name',
@@ -97,9 +59,19 @@ class Module implements
                     );
                 }
 
-                $detector->getEventManager()->attach(
-                    $services->get($listenerClass)
-                );
+                $listener = $serviceManager->get($listenerClass);
+
+                if (!$listener instanceof ListenerAggregateInterface) {
+                    throw new Exception\ConfigException(
+                        sprintf(
+                            'Invalid listener class "%s" specified; must be an instance of "%s"',
+                            $listenerClass,
+                            ListenerAggregateInterface::CLASS
+                        )
+                    );
+                }
+
+                $listener->attach($detector->getEventManager());
             }
         }
 
@@ -134,15 +106,25 @@ class Module implements
      */
     protected function bootstrapStrategies(MvcEvent $event)
     {
-        /** @var \Zend\ServiceManager\ServiceManager $services */
-        $services = $event->getApplication()->getServiceManager();
+        /** @var ServiceManager $serviceManager */
+        $serviceManager = $event->getApplication()->getServiceManager();
 
         // Use our own extended versions of UriPathStrategy and CookieStrategy
-        if ($services->has('SlmLocale\Strategy\StrategyPluginManager')) {
-            /** @var \SlmLocale\Strategy\StrategyPluginManager $plugins */
-            $plugins = $services->get(SlmLocale\Strategy\StrategyPluginManager::CLASS);
-            $plugins->setInvokableClass('uripath', Strategy\UriPathStrategy::CLASS);
+        if ($serviceManager->has(SlmLocale\Strategy\StrategyPluginManager::CLASS)) {
+            /** @var SimpleRouteStack $router */
+            $router = $serviceManager->get('router');
+
+            /** @var SlmLocale\Strategy\StrategyPluginManager $plugins */
+            $plugins = $serviceManager->get(SlmLocale\Strategy\StrategyPluginManager::CLASS);
+
+            // Our cookie strategy
             $plugins->setInvokableClass('cookie', Strategy\CookieStrategy::CLASS);
+
+            // Our uripath strategy
+            $plugins->setAlias('uripath', Strategy\UriPathStrategy::CLASS);
+            $plugins->setFactory(Strategy\UriPathStrategy::CLASS, function () use ($router) {
+                return new Strategy\UriPathStrategy($router);
+            });
 
             // We may need to inject the MvcEvent into a Strategy
             $plugins->addInitializer(

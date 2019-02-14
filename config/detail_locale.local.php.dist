@@ -1,10 +1,10 @@
 <?php
 
-return array(
-    'detail_locale' => array(
-        'navigation_items' => array(
+return [
+    'detail_locale' => [
+        'navigation_items' => [
             'de_CH' => 'DE',
             'en_US' => 'EN',
-        ),
-    ),
-);
+        ],
+    ],
+];

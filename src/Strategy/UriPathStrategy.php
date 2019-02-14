@@ -3,8 +3,8 @@
 namespace Detail\Locale\Strategy;
 
 use Zend\Http\Request as HttpRequest;
-//use Zend\Mvc\Router\Http\RouteMatch;
-use Zend\Mvc\Router\Http\TreeRouteStack;
+//use Zend\Router\Http\RouteMatch;
+use Zend\Router\Http\TreeRouteStack;
 use Zend\Stdlib\ResponseInterface;
 
 use SlmLocale\LocaleEvent;
@@ -27,7 +27,7 @@ class UriPathStrategy extends BaseUriPathStrategy implements
     /**
      * @var array
      */
-    protected $ignoredRoutes = array();
+    protected $ignoredRoutes = [];
 
     /**
      * Enabled request methods.
@@ -37,7 +37,7 @@ class UriPathStrategy extends BaseUriPathStrategy implements
      *
      * @var array
      */
-    protected $methods = array('GET');
+    protected $methods = ['GET'];
 
     /**
      * @return array
@@ -68,7 +68,7 @@ class UriPathStrategy extends BaseUriPathStrategy implements
      */
     public function setMethods(array $methods)
     {
-        $uppercaseMethods = array();
+        $uppercaseMethods = [];
 
         foreach ($methods as $method) {
             $uppercaseMethods[] = strtoupper($method);
@@ -118,7 +118,7 @@ class UriPathStrategy extends BaseUriPathStrategy implements
     /**
      * @param array $options
      */
-    public function setOptions(array $options = array())
+    public function setOptions(array $options = [])
     {
         parent::setOptions($options);
 
@@ -179,7 +179,7 @@ class UriPathStrategy extends BaseUriPathStrategy implements
 
             if ($locale === $found) {
                 /** @var TreeRouteStack $router */
-                $router = $this->getRouter();
+                $router = $this->router;
                 $router->setBaseUrl($base . '/' . $locale);
             }
 

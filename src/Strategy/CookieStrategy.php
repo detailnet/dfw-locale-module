@@ -40,7 +40,7 @@ class CookieStrategy extends BaseCookieStrategy
     /**
      * @param array $options
      */
-    public function setOptions(array $options = array())
+    public function setOptions(array $options = [])
     {
         parent::setOptions($options);
 

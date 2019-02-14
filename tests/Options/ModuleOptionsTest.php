@@ -2,36 +2,38 @@
 
 namespace DetailTest\Locale\Options;
 
+use Detail\Locale\Options\ModuleOptions;
+
 class ModuleOptionsTest extends OptionsTestCase
 {
     /**
-     * @var \Detail\Locale\Options\ModuleOptions
+     * @var ModuleOptions
      */
     protected $options;
 
     protected function setUp()
     {
         $this->options = $this->getOptions(
-            'Detail\Locale\Options\ModuleOptions',
-            array(
+            ModuleOptions::CLASS,
+            [
                 'getNavigationItems',
                 'setNavigationItems',
                 'getListeners',
                 'setListeners',
-            )
+            ]
         );
     }
 
     public function testOptionsExist()
     {
-        $this->assertInstanceOf('Detail\Locale\Options\ModuleOptions', $this->options);
+        $this->assertInstanceOf(ModuleOptions::CLASS, $this->options);
     }
 
     public function testNavigationItemsCanBeSet()
     {
-        $this->assertEquals(array(), $this->options->getNavigationItems());
+        $this->assertEquals([], $this->options->getNavigationItems());
 
-        $navigationItems = array('de_CH' => 'DE');
+        $navigationItems = ['de_CH' => 'DE'];
 
         $this->options->setNavigationItems($navigationItems);
 
@@ -40,9 +42,9 @@ class ModuleOptionsTest extends OptionsTestCase
 
     public function testListenersCanBeSet()
     {
-        $this->assertEquals(array(), $this->options->getListeners());
+        $this->assertEquals([], $this->options->getListeners());
 
-        $listeners = array('Some\Listener\Class');
+        $listeners = ['Some\Listener\Class'];
 
         $this->options->setListeners($listeners);
 

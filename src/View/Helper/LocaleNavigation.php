@@ -2,8 +2,12 @@
 
 namespace Detail\Locale\View\Helper;
 
+use SlmLocale\View\Helper\LocaleUrl;
+
 use Zend\I18n\Translator\TranslatorAwareTrait;
+use Zend\I18n\View\Helper\Translate;
 use Zend\View\Helper\AbstractHelper;
+use Zend\View\Renderer\PhpRenderer;
 
 class LocaleNavigation extends AbstractHelper
 {
@@ -12,7 +16,7 @@ class LocaleNavigation extends AbstractHelper
     /**
      * @var array
      */
-    protected $navigationItems = array();
+    protected $navigationItems = [];
 
     /**
      * @var null|string
@@ -22,20 +26,32 @@ class LocaleNavigation extends AbstractHelper
     /**
      * @var array
      */
-    protected $routeParams = array();
+    protected $routeParams = [];
 
     /**
      * @return string
      */
     public function __invoke()
     {
-        $output = array();
+        $output = [];
 
-        $currentLocale = $this->getView()->locale();
+        /** @var PhpRenderer $view */
+        $view = $this->getView();
+
+        /** @var Locale $localeHelper */
+        $localeHelper = $view->plugin('locale');
+
+        /** @var LocaleUrl $localeUrlHelper */
+        $localeUrlHelper = $view->plugin('localeUrl');
+
+        /** @var Translate $translateHelper */
+        $translateHelper = $view->plugin('translate');
+
+        $currentLocale = $localeHelper();
 
         foreach ($this->getNavigationItems() as $key => $label) {
-            $url = $this->getView()->localeUrl($key, $this->getRoute() ? $this->getRoute() : 'home', $this->getRouteParams());
-            $label = $this->getView()->translate($label);
+            $url = $localeUrlHelper($key, $this->getRoute() ? $this->getRoute() : 'home', $this->getRouteParams());
+            $label = $translateHelper($label);
 
             $output[] = '<a' . ($currentLocale === $key ? ' class="active"' : '') . ' href="' . $url . '">' . $label . '</a>';
         }

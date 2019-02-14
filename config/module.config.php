@@ -1,39 +1,39 @@
 <?php
 
-return array(
-    'service_manager' => array(
-        'abstract_factories' => array(
-        ),
-        'aliases' => array(
-        ),
-        'invokables' => array(
-        ),
-        'factories' => array(
+return [
+    'service_manager' => [
+        'abstract_factories' => [
+        ],
+        'aliases' => [
+        ],
+        'invokables' => [
+        ],
+        'factories' => [
             'SlmLocale\Locale\Detector' => 'SlmLocale\Service\DetectorFactory',
             'SlmLocale\Strategy\StrategyPluginManager' => 'Detail\Locale\Factory\SlmLocale\StrategyPluginManagerFactory',
             'Detail\Locale\Options\ModuleOptions' => 'Detail\Locale\Factory\Options\ModuleOptionsFactory',
-        ),
-        'initializers' => array(
-        ),
-        'shared' => array(
-        ),
-    ),
-    'view_helpers' => array(
-        'aliases' => array(
+        ],
+        'initializers' => [
+        ],
+        'shared' => [
+        ],
+    ],
+    'view_helpers' => [
+        'aliases' => [
 //            'localeMenu' => 'SlmLocale\View\Helper\LocaleMenu',
             'localeUrl' => 'SlmLocale\View\Helper\LocaleUrl',
             'locale' => 'Detail\Locale\View\Helper\Locale',
             'localeNavigation' => 'Detail\Locale\View\Helper\LocaleNavigation',
 
-        ),
-        'factories' => array(
+        ],
+        'factories' => [
 //            'SlmLocale\View\Helper\LocaleMenu' => 'SlmLocale\Service\LocaleMenuViewHelperFactory',
             'SlmLocale\View\Helper\LocaleUrl'=> 'SlmLocale\Service\LocaleUrlViewHelperFactory',
             'Detail\Locale\View\Helper\Locale' => 'Detail\Locale\Factory\View\Helper\LocaleFactory',
             'Detail\Locale\View\Helper\LocaleNavigation' => 'Detail\Locale\Factory\View\Helper\LocaleNavigationFactory',
-        ),
-    ),
-    'slm_locale' => array(
+        ],
+    ],
+    'slm_locale' => [
         /**
          * Default locale.
          */
@@ -47,10 +47,10 @@ return array(
         /**
          * Detection strategies.
          */
-        'strategies' => array(),
-    ),
-    'detail_locale' => array(
-        'navigation_items' => array(),
-        'listeners' => array(),
-    ),
-);
+        'strategies' => [],
+    ],
+    'detail_locale' => [
+        'navigation_items' => [],
+        'listeners' => [],
+    ],
+];
