@@ -110,7 +110,7 @@ class Module implements
         $serviceManager = $event->getApplication()->getServiceManager();
 
         // Use our own extended versions of UriPathStrategy and CookieStrategy
-        if ($serviceManager->has('SlmLocale\Strategy\StrategyPluginManager')) {
+        if ($serviceManager->has(SlmLocale\Strategy\StrategyPluginManager::CLASS)) {
             /** @var SimpleRouteStack $router */
             $router = $serviceManager->get('router');
 
